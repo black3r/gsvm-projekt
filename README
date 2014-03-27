@@ -1,0 +1,23 @@
+GSVM PROJEKT STAGE 1                    Roman Hudec
+===================================================
+- Poskytnutym Makefile sa da aplikacia skompilovat na linux-e, alebo z linux-u skompilovat windows-ovske .exe.
+- Windows-ovske .exe je staticke, malo by fungovat na kazdom windows-e (za predpokladu ze vo Windows-e je subor C:\Windows\Fonts\arial.ttf (standardne hej))
+- Linux-ovska aplikacia je dynamicka a vyzaduje vo svojej zlozke subor arial.ttf
+- Aplikacia moze zobrat ako parameter meno suboru, ten sa potom pokusi otvorit. Ak parameter nie je podany, pokusi sa otvorit subor "cube.obj"
+- V pravom dolnom rohu je input box, do ktoreho sa da vlozit meno subor-u a po stlaceni enter-u sa aplikacia pokusi subor otvorit.
+
+Obsah .zip-u:
+-------------
+cube-static.exe == staticka windows-ovska binarka
+cube.cpp == zdrojovy subor
+README == tento text
+arial.ttf == font Arial
+Makefile == makefile pre kompilovanie linux->linux alebo linux->windows
+
+
+Popis kodu:
+-----------
+class-y Button a InputBox su custom UI element-y. Cast kodu medzi // INPUT a // PROCESS patri k nim. Tieto veci sa netykaju samotneho zadania.
+Na vykreslenie som pouzil kniznice SDL a SDL_gfx. Specificky funkcie pixelColor a lineColor.
+UI mam vlastne vytvorene pomocou kniznice SDL.
+Kod je v C++11 a vyzaduje kompilator podporujuci tento standard.
