@@ -1,12 +1,21 @@
-all: cube cube-static.exe
+SOURCES=cube.cpp shared.cpp inputbox.cpp button.cpp
+TARGET=cube
+TARGET_WIN=cube.exe
+LIBS=-lSDL -lSDL_gfx -lSDL_ttf
+CXXFLAGS=-Wall -Wextra -O2 -g -std=gnu++11
+LIBS_WIN= -lmingw32 -luser32 -lgdi32 -lSDLmain -lSDL -lSDL_gfx -lwinmm -ldxguid -lSDL_ttf -lfreetype -lz -lbz2 -mwindows
+CXX=g++
+CXX_WIN=i686-w64-mingw32-g++
+
+all: $(TARGET) $(TARGET_WIN)
 
 run: cube
 	./cube
 
-cube: cube.cpp
-	g++ -Wall -Wextra -O2 -std=gnu++11 -o cube cube.cpp -lSDL -lSDL_gfx -lSDL_ttf -g
+$(TARGET): $(SOURCES)
+	g++ $(CXXFLAGS) -o $(TARGET) $(SOURCES) $(LIBS)
 
-cube-static.exe: cube.cpp
-	x86_64-w64-mingw32-g++ -static -Wall -Wextra -O2 -std=gnu++11 -o cube-static.exe cube.cpp -lmingw32 -luser32 -lgdi32  -lSDLmain -lSDL -lSDL_gfx -lwinmm -ldxguid -lSDL_ttf -lfreetype -lz -lbz2 -mwindows
+$(TARGET_WIN): $(SOURCES)
+	$(CXX_WIN) -static $(CXXFLAGS) -o $(TARGET_WIN) $(SOURCES) $(LIBS_WIN)
 
 .PHONY: run
