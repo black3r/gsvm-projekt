@@ -15,6 +15,7 @@ using namespace std;
 #include "button.h"
 #include "inputbox.h"
 #include "shared.h"
+#include "matrix.h"
 
 TTF_Font *font = NULL;
 SDL_Color textColor = {0,0,0};
@@ -120,5 +121,6 @@ int main(int argc, char** argv) {
     TTF_CloseFont(font);
     TTF_Quit();
     SDL_Quit();
+
     return 0;
 }
