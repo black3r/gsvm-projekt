@@ -22,14 +22,17 @@ SDL_Color textColor = {0,0,0};
 InputBox filename = InputBox("hello");
 string openfilename = "";
 vector<Button> buttons;
+SDL_Surface* screen;
 
 vector<vector<float>> vertices;
 vector<vector<int>> faces;
 
+Matrix translation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+Matrix projection = {{100,0,0,0}, {0, -100, 0, 0}, {0,0,1,0}, {300,200,0,1}};
+
 int main(int argc, char** argv) {
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
-    SDL_Surface* screen = NULL;
     screen = SDL_SetVideoMode(800, 400, 32, SDL_SWSURFACE);
     #ifdef _WIN32
     font = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 14);
@@ -45,6 +48,8 @@ int main(int argc, char** argv) {
     buttons.push_back(Button("Quit!", [&](){
         running = false;
     }));
+    buttons.push_back(Button("Zoom +", zoomplus));
+    buttons.push_back(Button("Zoom -", zoomminus));
 
     while (running) {
         // INPUT
@@ -100,20 +105,12 @@ int main(int argc, char** argv) {
 
         // VERTICES
         for (auto vertex : vertices) {
-            int pos_x = vertex[0] * 100 + 300;
-            int pos_y = vertex[1] * 100 + 200;
-            pixelColor(screen, pos_x, 400 - pos_y, FOREGROUND);
+            draw_vertex(vertex);
         }
 
         // FACES
         for (auto face : faces) {
-            for (int i = 0; i < face.size(); i++) {
-                int start_x = vertices[face[i]-1][0] * 100 + 300;
-                int start_y = vertices[face[i]-1][1] * 100 + 200;
-                int end_x = vertices[face[(i+1)%face.size()] - 1][0] * 100 + 300;
-                int end_y = vertices[face[(i+1)%face.size()] - 1][1] * 100 + 200;
-                lineColor(screen, start_x, 400 - start_y, end_x, 400 - end_y, FOREGROUND);
-            }
+            draw_face(face);
         }
 
         SDL_Flip(screen);
