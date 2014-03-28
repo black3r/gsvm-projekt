@@ -17,4 +17,6 @@ public:
 
 };
 
+void handle_button_input(int x, int y);
+
 #endif

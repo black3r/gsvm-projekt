@@ -76,3 +76,9 @@ void InputBox::toggleSelect() {
     if (this->selected) this->deselect();
     else this->select();
 }
+
+void InputBox::handle_mouse(int x, int y) {
+    if (y > (400 - 30) && y < (400 - 5)) this->toggleSelect();
+    else this->deselect();
+}
+

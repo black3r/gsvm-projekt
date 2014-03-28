@@ -16,7 +16,7 @@ extern string openfilename;
 extern vector<vector<float>> vertices;
 extern vector<vector<int>> faces;
 extern SDL_Surface* screen;
-extern Matrix translation;
+extern Matrix transformation;
 extern Matrix projection;
 
 void openfile(string fname) {
@@ -52,7 +52,7 @@ void openfile(string fname) {
 vector<float> get_draw_coords(vector<float> vertex) {
     // first apply transformation matrix, then return first two coordinates.
     vertex.push_back(1);
-    Matrix t = vertex * translation * projection;
+    Matrix t = vertex * transformation * projection;
     return {t[0][0], t[0][1]};
 }
 
@@ -75,10 +75,10 @@ void draw_face(vector<int> face) {
 }
 
 void zoomplus() {
-    translation *= {{1.1,0,0,0},{0,1.1,0,0},{0,0,1.1,0},{0,0,0,1}};
+    transformation *= {{1.1,0,0,0},{0,1.1,0,0},{0,0,1.1,0},{0,0,0,1}};
 }
 
 void zoomminus() {
-    translation *= {{0.9,0,0,0},{0,0.9,0,0},{0,0,0.9,0},{0,0,0,1}};
+    transformation *= {{0.9,0,0,0},{0,0.9,0,0},{0,0,0.9,0},{0,0,0,1}};
 }
 

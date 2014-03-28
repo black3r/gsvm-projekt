@@ -27,7 +27,7 @@ SDL_Surface* screen;
 vector<vector<float>> vertices;
 vector<vector<int>> faces;
 
-Matrix translation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+Matrix transformation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 Matrix projection = {{100,0,0,0}, {0, -100, 0, 0}, {0,0,1,0}, {300,200,0,1}};
 
 int main(int argc, char** argv) {
@@ -60,26 +60,8 @@ int main(int argc, char** argv) {
                 if (event.button.button == SDL_BUTTON_LEFT) {
                     int x = event.button.x;
                     int y = event.button.y;
-                    if ( x > 610 && x < 790 ) {
-                        if ( y <= 350 ) {
-                            int s = y / 50;
-                            if ( y > s*50 + 5 && y < s*50 + 45) {
-                                if (buttons.size() > s) {
-                                    buttons[s].callback();
-                                } else {
-                                    filename.deselect();
-                                }
-                            } else {
-                                filename.deselect();
-                            }
-                        } else if (y > (400 - 30) && y < (400 - 5)) {
-                            filename.toggleSelect();
-                        } else {
-                            filename.deselect();
-                        }
-                    } else {
-                        filename.deselect();
-                    }
+                    handle_button_input(x, y);
+                    filename.handle_mouse(x, y);
                 }
             }
             if (event.type == SDL_KEYDOWN) {

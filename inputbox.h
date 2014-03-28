@@ -17,6 +17,7 @@ public:
     string getText();
     void draw(SDL_Surface* screen);
     void handle_keypress(SDL_keysym keysym);
+    void handle_mouse(int x, int y);
     void select();
     void deselect();
     void renderText();
