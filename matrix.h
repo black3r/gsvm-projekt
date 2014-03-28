@@ -14,6 +14,7 @@ public:
     Matrix(int rows, int columns);
     Matrix(int rows, int columns, bool resize);
     Matrix(vector<vector<float>> data);
+    Matrix(vector<float> vektor);
     Matrix(std::initializer_list<std::initializer_list<float>> lst);
     vector<float> operator[](int index);
     void printMatrix();

@@ -20,6 +20,11 @@ Matrix::Matrix(data.size(), data.size() ? data.begin()->size() : 0) {
     this->_data = data;
 }
 
+Matrix::Matrix(vector<float> vektor) :
+Matrix::Matrix(1, vektor.size()) {
+    _data.push_back(vektor);
+}
+
 Matrix::Matrix(std::initializer_list<std::initializer_list<float>> lst) :
 Matrix::Matrix(lst.size(), lst.size() ? lst.begin()->size() : 0, true) {
     int i = 0, j = 0;
