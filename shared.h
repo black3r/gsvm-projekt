@@ -10,6 +10,8 @@ using namespace std;
 #define FOREGROUND 0x000000FF
 #define BACKGROUND 0xFFFFFFFF
 
+void init(int argc, char** argv);
+void handle_events();
 void clear();
 void openfile(string);
 vector<float> get_draw_coords(vector<float> vertex);
@@ -19,5 +21,6 @@ void draw_vertex(vector<float> vertex);
 void draw_face(vector<int> face);
 void zoomplus();
 void zoomminus();
+void deinit();
 
 #endif

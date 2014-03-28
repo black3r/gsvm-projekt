@@ -1,6 +1,7 @@
 #include "shared.h"
 #include "inputbox.h"
 #include "matrix.h"
+#include "button.h"
 #include <vector>
 #include <string>
 #include <sstream>
@@ -8,6 +9,7 @@
 #include <fstream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
+#include <SDL/SDL_ttf.h>
 
 using namespace std;
 
@@ -18,6 +20,8 @@ extern vector<vector<int>> faces;
 extern SDL_Surface* screen;
 extern Matrix transformation;
 extern Matrix projection;
+extern TTF_Font* font;
+extern bool running;
 
 void openfile(string fname) {
     vertices.clear();
@@ -84,4 +88,42 @@ void zoomminus() {
 
 void clear() {
     SDL_FillRect(screen, NULL, BACKGROUND);
+}
+
+void init(int argc, char** argv) {
+    SDL_Init(SDL_INIT_EVERYTHING);
+    TTF_Init();
+    screen = SDL_SetVideoMode(800, 400, 32, SDL_SWSURFACE);
+    #ifdef _WIN32
+    font = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 14);
+    #else
+    font = TTF_OpenFont("arial.ttf", 14);
+    #endif
+
+    if (argc == 1) openfile("cube.obj");
+    else openfile(argv[1]);
+}
+
+void deinit() {
+    TTF_CloseFont(font);
+    TTF_Quit();
+    SDL_Quit();
+}
+
+void handle_events() {
+    SDL_Event event;
+    while (SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT) running = false;
+        if (event.type == SDL_MOUSEBUTTONDOWN) {
+            if (event.button.button == SDL_BUTTON_LEFT) {
+                int x = event.button.x;
+                int y = event.button.y;
+                handle_button_input(x, y);
+                filename.handle_mouse(x, y);
+            }
+        }
+        if (event.type == SDL_KEYDOWN) {
+            filename.handle_keypress(event.key.keysym);
+        }
+    }
 }
