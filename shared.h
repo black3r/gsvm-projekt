@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <functional>
 #include <SDL/SDL.h>
 using namespace std;
 
@@ -21,6 +22,7 @@ void draw_vertex(vector<float> vertex);
 void draw_face(vector<int> face);
 void zoomplus();
 void zoomminus();
+function<void()> get_translate_lambda(float x, float y, float z);
 void deinit();
 
 #endif

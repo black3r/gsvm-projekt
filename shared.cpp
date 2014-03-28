@@ -127,3 +127,11 @@ void handle_events() {
         }
     }
 }
+
+function<void()> get_translate_lambda(float x, float y, float z) {
+    return [&transformation, x, y, z](){
+        printf("%f %f %f\n", x, y, z);
+        transformation *= {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {x, y, z, 1}};
+        transformation.printMatrix();
+    };
+}

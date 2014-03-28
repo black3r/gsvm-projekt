@@ -39,6 +39,13 @@ int main(int argc, char** argv) {
     }));
     buttons.push_back(Button("Zoom +", zoomplus));
     buttons.push_back(Button("Zoom -", zoomminus));
+    buttons.push_back(Button("X +", get_translate_lambda(0.1f,0,0)));
+    buttons.push_back(Button("Y +", get_translate_lambda(0,0.1f,0)));
+    buttons.push_back(Button("Z +", get_translate_lambda(0,0,0.1f)));
+    buttons.push_back(Button("X -", get_translate_lambda(-0.1f,0,0)));
+    buttons.push_back(Button("Y -", get_translate_lambda(0,-0.1f,0)));
+    buttons.push_back(Button("Z -", get_translate_lambda(0,0,-0.1f)));
+
 
     while (running) {
         handle_events();
