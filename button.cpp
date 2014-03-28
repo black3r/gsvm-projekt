@@ -5,7 +5,7 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_gfxPrimitives.h>
 
-#define BUTTON_HEIGHT 30
+#define BUTTON_HEIGHT 23
 
 using namespace std;
 extern TTF_Font* font;

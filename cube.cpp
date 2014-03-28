@@ -30,6 +30,9 @@ bool running = true;
 
 Matrix transformation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 Matrix projection = {{100,0,0,0}, {0, -100, 0, 0}, {0,0,1,0}, {300,200,0,1}};
+Matrix translation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+Matrix rotation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+Matrix scaling = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 
 int main(int argc, char** argv) {
     init(argc, argv);
@@ -45,6 +48,12 @@ int main(int argc, char** argv) {
     buttons.push_back(Button("X -", get_translate_lambda(-0.1f,0,0)));
     buttons.push_back(Button("Y -", get_translate_lambda(0,-0.1f,0)));
     buttons.push_back(Button("Z -", get_translate_lambda(0,0,-0.1f)));
+    buttons.push_back(Button("Rotate X +", rotate_x(5)));
+    buttons.push_back(Button("Rotate Y +", rotate_y(5)));
+    buttons.push_back(Button("Rotate Z +", rotate_z(5)));
+    buttons.push_back(Button("Rotate X -", rotate_x(-5)));
+    buttons.push_back(Button("Rotate Y -", rotate_y(-5)));
+    buttons.push_back(Button("Rotate Z -", rotate_z(-5)));
 
 
     while (running) {

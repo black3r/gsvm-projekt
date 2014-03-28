@@ -25,4 +25,8 @@ void zoomminus();
 function<void()> get_translate_lambda(float x, float y, float z);
 void deinit();
 
+function<void()> rotate_x(float d);
+function<void()> rotate_y(float d);
+function<void()> rotate_z(float d);
+
 #endif
