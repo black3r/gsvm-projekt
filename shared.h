@@ -10,6 +10,7 @@ using namespace std;
 #define FOREGROUND 0x000000FF
 #define BACKGROUND 0xFFFFFFFF
 
+void clear();
 void openfile(string);
 vector<float> get_draw_coords(vector<float> vertex);
 void draw_point(SDL_Surface* screen, vector<float> draw_coords);

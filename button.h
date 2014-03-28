@@ -18,5 +18,6 @@ public:
 };
 
 void handle_button_input(int x, int y);
+void draw_buttons();
 
 #endif

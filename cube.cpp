@@ -70,30 +70,11 @@ int main(int argc, char** argv) {
         }
         // PROCESS
 
-        // OUTPUT
-        // CLEAR TO WHITE
-        SDL_FillRect(screen, NULL, BACKGROUND);
-        // BUTTONS
-        for (int i = 0; i < buttons.size(); i++) {
-            rectangleColor(screen, 610, i*50 + 5, 790, i*50 + 45, FOREGROUND);
-            SDL_Rect offset;
-            offset.x = 620;
-            offset.y = i*50 + 17;
-            SDL_BlitSurface(buttons[i].rendered, NULL, screen, &offset);
-        }
-
-        // INPUTBOX
+        clear();
+        draw_buttons();
         filename.draw(screen);
-
-        // VERTICES
-        for (auto vertex : vertices) {
-            draw_vertex(vertex);
-        }
-
-        // FACES
-        for (auto face : faces) {
-            draw_face(face);
-        }
+        for (auto vertex : vertices) draw_vertex(vertex);
+        for (auto face : faces) draw_face(face);
 
         SDL_Flip(screen);
     }

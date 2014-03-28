@@ -82,3 +82,6 @@ void zoomminus() {
     transformation *= {{0.9,0,0,0},{0,0.9,0,0},{0,0,0.9,0},{0,0,0,1}};
 }
 
+void clear() {
+    SDL_FillRect(screen, NULL, BACKGROUND);
+}
