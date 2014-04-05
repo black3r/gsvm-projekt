@@ -40,20 +40,20 @@ int main(int argc, char** argv) {
     buttons.push_back(Button("Quit!", [&](){
         running = false;
     }));
-    buttons.push_back(Button("Zoom +", zoomplus));
-    buttons.push_back(Button("Zoom -", zoomminus));
-    buttons.push_back(Button("X +", get_translate_lambda(0.1f,0,0)));
-    buttons.push_back(Button("Y +", get_translate_lambda(0,0.1f,0)));
-    buttons.push_back(Button("Z +", get_translate_lambda(0,0,0.1f)));
-    buttons.push_back(Button("X -", get_translate_lambda(-0.1f,0,0)));
-    buttons.push_back(Button("Y -", get_translate_lambda(0,-0.1f,0)));
-    buttons.push_back(Button("Z -", get_translate_lambda(0,0,-0.1f)));
-    buttons.push_back(Button("Rotate X +", rotate_x(5)));
-    buttons.push_back(Button("Rotate Y +", rotate_y(5)));
-    buttons.push_back(Button("Rotate Z +", rotate_z(5)));
-    buttons.push_back(Button("Rotate X -", rotate_x(-5)));
-    buttons.push_back(Button("Rotate Y -", rotate_y(-5)));
-    buttons.push_back(Button("Rotate Z -", rotate_z(-5)));
+    buttons.push_back(Button("Zoom +", bind(zoom, 1.1)));
+    buttons.push_back(Button("Zoom -", bind(zoom, 0.9)));
+    buttons.push_back(Button("X +", bind(translate,0.1f,0,0)));
+    buttons.push_back(Button("Y +", bind(translate,0,0.1f,0)));
+    buttons.push_back(Button("Z +", bind(translate,0,0,0.1f)));
+    buttons.push_back(Button("X -", bind(translate,-0.1f,0,0)));
+    buttons.push_back(Button("Y -", bind(translate,0,-0.1f,0)));
+    buttons.push_back(Button("Z -", bind(translate,0,0,-0.1f)));
+    buttons.push_back(Button("Rotate X +", bind(rotate_x,5)));
+    buttons.push_back(Button("Rotate Y +", bind(rotate_y,5)));
+    buttons.push_back(Button("Rotate Z +", bind(rotate_z,5)));
+    buttons.push_back(Button("Rotate X -", bind(rotate_x,-5)));
+    buttons.push_back(Button("Rotate Y -", bind(rotate_y,-5)));
+    buttons.push_back(Button("Rotate Z -", bind(rotate_z,-5)));
 
 
     while (running) {

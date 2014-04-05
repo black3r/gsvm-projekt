@@ -20,13 +20,13 @@ void draw_point(SDL_Surface* screen, vector<float> draw_coords);
 void draw_line(SDL_Surface* screen, vector<float> draw_coords_from, vector<float> draw_coords_to);
 void draw_vertex(vector<float> vertex);
 void draw_face(vector<int> face);
-void zoomplus();
-void zoomminus();
+void zoom(float ratio);
 function<void()> get_translate_lambda(float x, float y, float z);
+void translate(float x, float y, float z);
 void deinit();
 
-function<void()> rotate_x(float d);
-function<void()> rotate_y(float d);
-function<void()> rotate_z(float d);
+void rotate_x(float d);
+void rotate_y(float d);
+void rotate_z(float d);
 
 #endif

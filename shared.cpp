@@ -58,7 +58,6 @@ void openfile(string fname) {
 }
 
 vector<float> get_draw_coords(vector<float> vertex) {
-    // first apply transformation matrix, then return first two coordinates.
     vertex.push_back(1);
     Matrix t = vertex * scaling * translation * rotation * projection;
     return {t[0][0], t[0][1]};
@@ -80,14 +79,6 @@ void draw_face(vector<int> face) {
     for (int i = 0; i < face.size(); i++) {
         draw_line(screen, get_draw_coords(vertices[face[i]-1]), get_draw_coords(vertices[face[(i+1)%face.size()] - 1]));
     }
-}
-
-void zoomplus() {
-    scaling *= {{1.1,0,0,0},{0,1.1,0,0},{0,0,1.1,0},{0,0,0,1}};
-}
-
-void zoomminus() {
-    scaling *= {{0.9,0,0,0},{0,0.9,0,0},{0,0,0.9,0},{0,0,0,1}};
 }
 
 void clear() {
@@ -132,30 +123,25 @@ void handle_events() {
     }
 }
 
-function<void()> get_translate_lambda(float x, float y, float z) {
-    return [&translation, x, y, z](){
-        printf("%f %f %f\n", x, y, z);
-        translation *= {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {x, y, z, 1}};
-    };
+void zoom(float ratio) {
+    scaling *= {{ratio,0,0,0},{0,ratio,0,0},{0,0,ratio,0},{0,0,0,1}};
 }
 
-function<void()> rotate_x(float d) {
-    float x = (d / 180) * PI;
-    return [&rotation, x]() {
-        rotation *= {{1,0,0,0}, {0,cos(x),-sin(x),0}, {0, sin(x), cos(x), 0}, {0,0,0,1}};
-    };
+void translate(float x, float y, float z) {
+    translation *= {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {x, y, z, 1}};
 }
 
-function<void()> rotate_y(float d) {
+void rotate_x(float d) {
     float x = (d / 180) * PI;
-    return [&rotation, x]() {
-        rotation *= {{cos(x),0,sin(x),0}, {0,1,0,0}, {-sin(x),0,cos(x),0}, {0,0,0,1}};
-    };
+    rotation *= {{1,0,0,0}, {0,cos(x),-sin(x),0}, {0, sin(x), cos(x), 0}, {0,0,0,1}};
 }
 
-function<void()> rotate_z(float d) {
+void rotate_y(float d) {
     float x = (d / 180) * PI;
-    return [&rotation, x]() {
-        rotation *= {{cos(x), sin(x), 0,0}, {-sin(x), cos(x), 0, 0}, {0,0,1,0}, {0,0,0,1}};
-    };
+    rotation *= {{cos(x),0,sin(x),0}, {0,1,0,0}, {-sin(x),0,cos(x),0}, {0,0,0,1}};
+}
+
+void rotate_z(float d) {
+    float x = (d / 180) * PI;
+    rotation *= {{cos(x), sin(x), 0,0}, {-sin(x), cos(x), 0, 0}, {0,0,1,0}, {0,0,0,1}};
 }
