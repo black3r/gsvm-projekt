@@ -20,6 +20,7 @@ extern string openfilename;
 extern vector<vector<float>> vertices;
 extern vector<vector<int>> faces;
 extern SDL_Surface* screen;
+extern Matrix transformation;
 extern Matrix scaling;
 extern Matrix translation;
 extern Matrix rotation;
@@ -59,7 +60,7 @@ void openfile(string fname) {
 
 vector<float> get_draw_coords(vector<float> vertex) {
     vertex.push_back(1);
-    Matrix t = vertex * scaling * translation * rotation * projection;
+    Matrix t = vertex * transformation * projection;
     return {t[0][0], t[0][1]};
 }
 
@@ -124,24 +125,24 @@ void handle_events() {
 }
 
 void zoom(float ratio) {
-    scaling *= {{ratio,0,0,0},{0,ratio,0,0},{0,0,ratio,0},{0,0,0,1}};
+    transformation *= {{ratio,0,0,0},{0,ratio,0,0},{0,0,ratio,0},{0,0,0,1}};
 }
 
 void translate(float x, float y, float z) {
-    translation *= {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {x, y, z, 1}};
+    transformation *= {{1, 0, 0, 0}, {0, 1, 0, 0}, {0, 0, 1, 0}, {x, y, z, 1}};
 }
 
 void rotate_x(float d) {
     float x = (d / 180) * PI;
-    rotation *= {{1,0,0,0}, {0,cos(x),-sin(x),0}, {0, sin(x), cos(x), 0}, {0,0,0,1}};
+    transformation *= {{1,0,0,0}, {0,cos(x),-sin(x),0}, {0, sin(x), cos(x), 0}, {0,0,0,1}};
 }
 
 void rotate_y(float d) {
     float x = (d / 180) * PI;
-    rotation *= {{cos(x),0,sin(x),0}, {0,1,0,0}, {-sin(x),0,cos(x),0}, {0,0,0,1}};
+    transformation *= {{cos(x),0,sin(x),0}, {0,1,0,0}, {-sin(x),0,cos(x),0}, {0,0,0,1}};
 }
 
 void rotate_z(float d) {
     float x = (d / 180) * PI;
-    rotation *= {{cos(x), sin(x), 0,0}, {-sin(x), cos(x), 0, 0}, {0,0,1,0}, {0,0,0,1}};
+    transformation *= {{cos(x), sin(x), 0,0}, {-sin(x), cos(x), 0, 0}, {0,0,1,0}, {0,0,0,1}};
 }
