@@ -40,6 +40,12 @@ void handle_button_input(int x, int y) {
 }
 
 void draw_buttons() {
+    SDL_Rect buttonrect;
+    buttonrect.x = 600;
+    buttonrect.y = 0;
+    buttonrect.w = 200;
+    buttonrect.h = 400;
+    SDL_FillRect(screen, &buttonrect , BACKGROUND);
     for (int i = 0; i < buttons.size(); i++) {
         rectangleColor(screen, 610, i*BUTTON_HEIGHT + 5, 790, (i+1)*BUTTON_HEIGHT - 5, FOREGROUND);
         SDL_Rect offset;

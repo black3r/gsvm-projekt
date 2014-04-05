@@ -60,10 +60,10 @@ int main(int argc, char** argv) {
         handle_events();
 
         clear();
-        draw_buttons();
-        filename.draw(screen);
         for (auto vertex : vertices) draw_vertex(vertex);
         for (auto face : faces) draw_face(face);
+        draw_buttons();
+        filename.draw(screen);
 
         SDL_Flip(screen);
     }
