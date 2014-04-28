@@ -5,6 +5,8 @@
 #include <vector>
 #include <functional>
 #include <SDL/SDL.h>
+#include <cstdint>
+#include "matrix.h"
 using namespace std;
 
 
@@ -28,5 +30,12 @@ void deinit();
 void rotate_x(float d);
 void rotate_y(float d);
 void rotate_z(float d);
+
+float get_intensity(vector<vector<float>> points);
+vector<float> get_normal(vector<vector<float>> points);
+float get_norm(vector<float> points);
+bool should_draw(vector<vector<float>> points);
+
+const Matrix camera = {{0,0,1}};
 
 #endif

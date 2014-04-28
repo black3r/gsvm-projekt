@@ -33,8 +33,13 @@ Matrix projection = {{100,0,0,0}, {0, -100, 0, 0}, {0,0,1,0}, {300,200,0,1}};
 Matrix translation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 Matrix rotation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 Matrix scaling = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+Matrix light = {{0,10,0}};
+uint8_t fr,fg,fb;
 
 int main(int argc, char** argv) {
+    fr = 255;
+    fg = 255;
+    fb = 0;
     init(argc, argv);
 
     buttons.push_back(Button("Quit!", [&](){
