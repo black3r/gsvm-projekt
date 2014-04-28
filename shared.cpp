@@ -1,5 +1,4 @@
 #include "shared.h"
-#include "inputbox.h"
 #include "matrix.h"
 #include "button.h"
 #include <vector>
@@ -15,7 +14,7 @@
 using namespace std;
 #define PI 3.141592653
 
-extern InputBox filename;
+
 extern string openfilename;
 extern vector<vector<float>> vertices;
 extern vector<vector<int>> faces;
@@ -25,7 +24,7 @@ extern Matrix scaling;
 extern Matrix translation;
 extern Matrix rotation;
 extern Matrix projection;
-extern Matrix light;
+extern vector<float> light;
 extern TTF_Font* font;
 extern bool running;
 extern uint8_t fr,fg,fb;
@@ -40,7 +39,7 @@ void openfile(string fname) {
         openfilename = "** ERROR **";
     }
     SDL_WM_SetCaption(openfilename.c_str(), NULL);
-    filename.setText(fname);
+    //filename.setText(fname);
 
     string s;
     while (getline(f, s)) {
@@ -109,7 +108,7 @@ void draw_face(vector<int> face) {
 
 bool should_draw(vector<vector<float>> points) {
     vector<float> normal = get_normal(points);
-    return (normal[2] >= 0);
+    return (normal[2] <= 0);
 }
 
 float get_intensity(vector<vector<float>> points) {
@@ -123,7 +122,7 @@ float get_intensity(vector<vector<float>> points) {
     y /= points.size();
     z /= points.size();
 
-    vector<float> vertex = {x-light[0][0], y-light[0][1], z-light[0][2]};
+    vector<float> vertex = {x-light[0], y-light[1], z-light[2]};
     vector<float> normal = get_normal(points);
     float dot_product = vertex[0]*normal[0] + vertex[1]*normal[1] + vertex[2]*normal[2];
     float cosine = dot_product / (get_norm(vertex) * get_norm(normal));
@@ -156,7 +155,7 @@ void clear() {
 void init(int argc, char** argv) {
     SDL_Init(SDL_INIT_EVERYTHING);
     TTF_Init();
-    screen = SDL_SetVideoMode(800, 400, 32, SDL_SWSURFACE);
+    screen = SDL_SetVideoMode(800, 600, 32, SDL_SWSURFACE);
     #ifdef _WIN32
     font = TTF_OpenFont("C:\\Windows\\Fonts\\arial.ttf", 12);
     #else
@@ -182,11 +181,7 @@ void handle_events() {
                 int x = event.button.x;
                 int y = event.button.y;
                 handle_button_input(x, y);
-                filename.handle_mouse(x, y);
             }
-        }
-        if (event.type == SDL_KEYDOWN) {
-            filename.handle_keypress(event.key.keysym);
         }
     }
 }

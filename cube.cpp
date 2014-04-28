@@ -13,13 +13,11 @@
 using namespace std;
 
 #include "button.h"
-#include "inputbox.h"
 #include "shared.h"
 #include "matrix.h"
 
 TTF_Font *font = NULL;
 SDL_Color textColor = {0,0,0};
-InputBox filename = InputBox("hello");
 string openfilename = "";
 vector<Button> buttons;
 SDL_Surface* screen;
@@ -33,13 +31,13 @@ Matrix projection = {{100,0,0,0}, {0, -100, 0, 0}, {0,0,1,0}, {300,200,0,1}};
 Matrix translation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 Matrix rotation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 Matrix scaling = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
-Matrix light = {{0,10,0}};
+vector<float> light = {0,0,0};
 uint8_t fr,fg,fb;
 
 int main(int argc, char** argv) {
     fr = 255;
     fg = 255;
-    fb = 0;
+    fb = 255;
     init(argc, argv);
 
     buttons.push_back(Button("Quit!", [&](){
@@ -59,6 +57,56 @@ int main(int argc, char** argv) {
     buttons.push_back(Button("Rotate X -", bind(rotate_x,-5)));
     buttons.push_back(Button("Rotate Y -", bind(rotate_y,-5)));
     buttons.push_back(Button("Rotate Z -", bind(rotate_z,-5)));
+    buttons.push_back(Button("Light X +", [](){light[0]++;}));
+    buttons.push_back(Button("Light Y +", [](){light[1]++;}));
+    buttons.push_back(Button("Light Z +", [](){light[2]++;}));
+    buttons.push_back(Button("Light X -", [](){light[0]--;}));
+    buttons.push_back(Button("Light Y -", [](){light[1]--;}));
+    buttons.push_back(Button("Light Z -", [](){light[2]--;}));
+    buttons.push_back(Button("Color pick", []() {
+        FILE* pipe = popen("zenity --color-selection", "r");
+        char buffer[16];
+        fgets(buffer, sizeof(buffer), pipe);
+        pclose(pipe);
+        unsigned int red, green, blue;
+        char rc[2], rg[2], rb[2];
+        rc[0] = buffer[1];
+        rc[1] = buffer[2];
+        rc[2] = 0;
+        rg[0] = buffer[5];
+        rg[1] = buffer[6];
+        rg[2] = 0;
+        rb[0] = buffer[9];
+        rb[1] = buffer[10];
+        rb[2] = 0;
+        sscanf(rc, "%x", &red);
+        sscanf(rg, "%x", &green);
+        sscanf(rb, "%x", &blue);
+        cout << "Red: " << red << endl;
+        cout << "Green: " << green << endl;
+        cout << "Blue: " << blue << endl;
+        fr = red;
+        fg = green;
+        fb = blue;
+    }));
+    buttons.push_back(Button("Reset", []() {
+        transformation = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+        light = {0,0,0};
+        fr = 255;
+        fg = 255;
+        fb = 255;
+    }));
+    buttons.push_back(Button("Open file", []() {
+        FILE* pipe = popen("zenity --file-selection", "r");
+        char buffer[16000];
+        fgets(buffer, sizeof(buffer), pipe);
+        for (int i = 0; i < sizeof(buffer); i++) {
+            if (buffer[i] == ' ' || buffer[i] == '\n') buffer[i] = 0;
+        }
+        pclose(pipe);
+        openfile(buffer);
+        cout << buffer << endl;
+    }));
 
 
     while (running) {
@@ -68,7 +116,6 @@ int main(int argc, char** argv) {
         for (auto vertex : vertices) draw_vertex(vertex);
         for (auto face : faces) draw_face(face);
         draw_buttons();
-        filename.draw(screen);
 
         SDL_Flip(screen);
     }

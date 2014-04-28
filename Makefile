@@ -1,4 +1,4 @@
-SOURCES=cube.cpp shared.cpp inputbox.cpp button.cpp matrix.cpp
+SOURCES=cube.cpp shared.cpp button.cpp matrix.cpp
 TARGET=cube
 TARGET_WIN=cube.exe
 LIBS=-lSDL -lSDL_gfx -lSDL_ttf

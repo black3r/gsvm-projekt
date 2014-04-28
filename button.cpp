@@ -28,7 +28,7 @@ void Button::setText(string text) {
 
 void handle_button_input(int x, int y) {
     if ( x > 610 && x < 790 ) {
-        if ( y <= 350 ) {
+        if ( y <= 550 ) {
             int s = y / BUTTON_HEIGHT;
             if ( y > s*BUTTON_HEIGHT + 5 && y < (s+1)*BUTTON_HEIGHT - 5) {
                 if (buttons.size() > s) {
